@@ -97,6 +97,9 @@ public class ChecklistFragment extends Fragment
                 if (v != null) {
                     int action = MotionEventCompat.getActionMasked(event);
                     if (action == MotionEvent.ACTION_UP) {
+
+                        //  this stuff is just to figure out which element in the list view you're
+                        //  messing with...
                         float yPos = event.getY();
                         int adapterIndex = mListView.pointToPosition((int)event.getX(), (int)yPos);
                         int firstPos = mListView.getFirstVisiblePosition();
@@ -178,28 +181,6 @@ public class ChecklistFragment extends Fragment
         alertDialog.show();
     }
 
-    //  Based on the swipe position, figure out which item in the listAdapter was swiped
-    //  and delete it from the database...
-//    public void deleteItem(MotionEvent event) {
-//        float xPos = event.getX();
-//        float yPos = event.getY();
-//        int adapterIndex = mListView.pointToPosition((int)xPos, (int)yPos);
-//        int firstPos = mListView.getFirstVisiblePosition();
-//        int viewIndex = adapterIndex - firstPos;
-//        View v = mListView.getChildAt(viewIndex);
-//        TextView tv = (TextView) v.findViewById(R.id.checked_text_view);
-//        String listItem = tv.getText().toString();
-//        String listName = ToDoContract.ToDoEntry.getListFromUri(mListUri);
-//
-//        long listId = Utility.getListIdFromName(getActivity(), listName);
-//
-//        getActivity().getContentResolver().delete(ToDoContract.ToDoEntry.CONTENT_URI,
-//                ToDoContract.ToDoEntry.COLUMN_SUMMARY + " = ? AND " +
-//                ToDoContract.ToDoEntry.COLUMN_LIST_ID + " = ?",
-//                new String[]{listItem, Long.toString(listId)});
-//        getLoaderManager().restartLoader(LOADER_ID, null, this);
-//    }
-
     //  I found an easier way to implement the swipe delete
     public void deleteItem(View v) {
         TextView tv = (TextView) v.findViewById(R.id.checked_text_view);
@@ -221,6 +202,7 @@ public class ChecklistFragment extends Fragment
         super.onActivityCreated(bundle);
     }
 
+    //  Simple helper function to get a list name
     public String getListName() {
         if (mListUri == null) {
             return null;
@@ -228,7 +210,6 @@ public class ChecklistFragment extends Fragment
             return ToDoContract.ToDoEntry.getListFromUri(mListUri);
         }
     }
-
 
     //  This is my home rolled fling listener
     class SwipeListener extends GestureDetector.SimpleOnGestureListener {
@@ -253,6 +234,8 @@ public class ChecklistFragment extends Fragment
             return true;
         }
 
+        //  Use the onScroll method to decide whether the list item has been moved fast enough
+        //  to justify a fling. Also set the position of the list item so it moves with your finger
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distX, float distY) {
             mPositionX -= distX;
@@ -286,27 +269,9 @@ public class ChecklistFragment extends Fragment
             mMovingView = null;
         }
 
-        //  I saved this as an example for myself later on...
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
-
-//            final int SWIPE_MIN_DISTANCE = 150;
-//            final int SWIPE_MAX_OFF_PATH = 250;
-//            final int SWIPE_THRESHOLD_VELOCITY = 200;
-//            try {
-//                if (Math.abs(event1.getY() - event2.getY()) > SWIPE_MAX_OFF_PATH) {
-//                    return false;
-//                }
-//                if (Math.abs(event1.getX() - event2.getX()) > SWIPE_MIN_DISTANCE &&
-//                        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                    deleteItem(event1);
-//                    return true;
-//                }
-//            } catch (Exception e) {
-//
-//            }
-
             return super.onFling(event1, event2, velocityX, velocityY);
         }
     }

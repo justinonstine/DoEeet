@@ -75,10 +75,10 @@ public class ToDoListFragment extends Fragment implements
         mListView = (ListView) rootView.findViewById(R.id.main_listview);
 
         //  Create a header for the list of lists for user clarity
-//        TextView headerText = new TextView(getActivity());
-//        headerText.setText("To-Do Lists");
-//        headerText.setTextSize(24);
-//        mListView.addHeaderView(headerText);
+        TextView headerText = new TextView(getActivity());
+        headerText.setText("To-Do Lists");
+        headerText.setTextSize(24);
+        mListView.addHeaderView(headerText);
 
         //  Create a gesture detector to handle single taps (launch the checklist activity)
         //  and long presses (context menu to delete a checklist)
@@ -91,15 +91,7 @@ public class ToDoListFragment extends Fragment implements
             }
         });
         registerForContextMenu(mListView);
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView parent, View view, int position, long id) {
-//                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-//                Intent intent = new Intent(getActivity(), ChecklistActivity.class)
-//                        .setData(ToDoContract.ToDoEntry.buildToDoList(cursor.getString(COL_LIST_NAME)));
-//                startActivity(intent);
-//            }
-//        });
+
         mAdapter = new ToDoListAdapter(getActivity(), null, 0);
         mListView.setAdapter(mAdapter);
 
@@ -221,39 +213,6 @@ public class ToDoListFragment extends Fragment implements
 
     }
 
-    //  Delete an entire list with a swipe (saving this for later)
-//    public void deleteList(long id) {
-//        float xPos = event.getX();
-//        float yPos = event.getY();
-//        int adapterIndex = mListView.pointToPosition((int) xPos, (int) yPos);
-//        int firstPos = mListView.getFirstVisiblePosition();
-//        int viewIndex = adapterIndex - firstPos;
-//        View v = mListView.getChildAt(viewIndex);
-//        TextView tv = (TextView) v.findViewById(R.id.list_item_textview);
-//        String listName = tv.getText().toString();
-//        Cursor cursor = getActivity().getContentResolver().query(
-//                ToDoContract.ToDoList.CONTENT_URI, ToDoListFragment.LIST_COLUMNS,
-//                ToDoContract.ToDoList.COLUMN_NAME + " = ? ",
-//                new String[]{listName},
-//                null
-//        );
-//        cursor.moveToFirst();
-//        long listId = cursor.getLong(ToDoListFragment.COL_LIST_ID);
-//
-//        //  First delete all the entries in the list to prevent any orphans
-//        getActivity().getContentResolver().delete(ToDoContract.ToDoEntry.CONTENT_URI,
-//                ToDoContract.ToDoEntry.COLUMN_LIST_ID + " = ? ",
-//                new String[]{Long.toString(listId)});
-//
-//        //  Now delete the list itself...
-//        getActivity().getContentResolver().delete(ToDoContract.ToDoList.CONTENT_URI,
-//                ToDoContract.ToDoList.COLUMN_NAME + " = ? ",
-//                new String[]{listName});
-//
-//        getLoaderManager().restartLoader(LOADER_ID, null, this);
-//
-//    }
-
     //  Create a listener class to handle touch gestures
     class TouchListener extends GestureDetector.SimpleOnGestureListener {
 
@@ -274,6 +233,11 @@ public class ToDoListFragment extends Fragment implements
             View v = mListView.getChildAt(viewIndex);
             TextView tv = (TextView) v.findViewById(R.id.list_item_textview);
 
+            //  If someone pokes the listview header, don't do anything...
+            if (tv == null) {
+                return false;
+            }
+
             Intent intent = new Intent(getActivity(), ChecklistActivity.class)
                     .setData(ToDoContract.ToDoEntry.buildToDoList(tv.getText().toString()));
             startActivity(intent);
@@ -286,31 +250,5 @@ public class ToDoListFragment extends Fragment implements
             super.onLongPress(event);
             getActivity().openContextMenu(mListView);
         }
-
-
-        //  Saving this for later
-//        @Override
-//        public boolean onFling(MotionEvent event1, MotionEvent event2,
-//                               float velocityX, float velocityY) {
-//
-//            final int SWIPE_MIN_DISTANCE = 150;
-//            final int SWIPE_MAX_OFF_PATH = 250;
-//            final int SWIPE_THRESHOLD_VELOCITY = 200;
-//            try {
-//                if (Math.abs(event1.getY() - event2.getY()) > SWIPE_MAX_OFF_PATH) {
-//                    return false;
-//                }
-//                if (Math.abs(event1.getX() - event2.getX()) > SWIPE_MIN_DISTANCE &&
-//                        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                    deleteList(event1);
-//                    return false;
-//                }
-//            } catch (Exception e) {
-//                return false;
-//            }
-//
-//            return super.onFling(event1, event2, velocityX, velocityY);
-//        }
     }
-
 }
