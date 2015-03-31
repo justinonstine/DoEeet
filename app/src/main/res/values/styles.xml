@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    </style>
+
+    <style name="ListTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.DoEeet.NoTitle</item>
+    </style>
+    <style name="ActionBar.Solid.DoEeet.NoTitle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="displayOptions">useLogo|showHome</item>
+        <item name="logo">@drawable/ic_logo</item>
+    </style>
+</resources>
