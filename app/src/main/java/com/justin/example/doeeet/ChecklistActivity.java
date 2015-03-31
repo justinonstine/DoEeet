@@ -21,6 +21,7 @@ public class ChecklistActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
+
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
             setTitle(ToDoContract.ToDoEntry.getListFromUri(getIntent().getData()));
@@ -71,6 +72,7 @@ public class ChecklistActivity extends ActionBarActivity {
     //  If a checkbox is ticked, update that item as complete
     public void toggleItem(View view) {
         CheckBox cb = (CheckBox) view;
+
         // Since the checkbox and textview are different things, grab them through the parent
         // view which is the linear layout
         LinearLayout ll = (LinearLayout) view.getParent();

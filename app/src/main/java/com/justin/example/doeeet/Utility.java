@@ -18,6 +18,8 @@ public class Utility {
                 null
         );
         cursor.moveToFirst();
-        return(cursor.getLong(ToDoListFragment.COL_LIST_ID));
+        long listId = cursor.getLong(ToDoListFragment.COL_LIST_ID);
+        cursor.close();
+        return(listId);
     }
 }

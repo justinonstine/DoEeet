@@ -13,7 +13,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MotionEventCompat;
 import android.text.InputType;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,9 +63,8 @@ public class ChecklistFragment extends Fragment
     //  Loader stuff
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         if (mListUri != null) {
-            CursorLoader cur = new CursorLoader(getActivity(), mListUri, TODO_COLUMNS,
+            return new CursorLoader(getActivity(), mListUri, TODO_COLUMNS,
                     null, null, null);
-            return cur;
         }
         return null;
     }
@@ -83,7 +81,8 @@ public class ChecklistFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_checklist, container, false);
         mListView = (ListView) rootView.findViewById(R.id.checklist_listview);
 
@@ -233,7 +232,6 @@ public class ChecklistFragment extends Fragment
 
     //  This is my home rolled fling listener
     class SwipeListener extends GestureDetector.SimpleOnGestureListener {
-        private static final String DEBUG_TAG = "Gestures";
         View mMovingView;
         float mPositionX = 0;
         float mFlingSpeed = 0;
@@ -257,7 +255,6 @@ public class ChecklistFragment extends Fragment
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distX, float distY) {
-            Log.d("scroll", "scroll?");
             mPositionX -= distX;
             if (mMovingView != null) {
                 mMovingView.setTranslationX(mPositionX);

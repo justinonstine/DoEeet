@@ -8,11 +8,11 @@
         android:layout_gravity="top" />
 
 
-        <Button android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="Delete Completed"
-            android:id="@+id/delete_checked_button"
-            android:onClick="deleteChecked"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom" />
+    <Button android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Delete Completed"
+        android:id="@+id/delete_checked_button"
+        android:onClick="deleteChecked"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom" />
 </RelativeLayout>

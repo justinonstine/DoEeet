@@ -75,9 +75,10 @@ public class ToDoListFragment extends Fragment implements
         mListView = (ListView) rootView.findViewById(R.id.main_listview);
 
         //  Create a header for the list of lists for user clarity
-        TextView headerText = new TextView(getActivity());
-        headerText.setText("To-Do Lists");
-        mListView.addHeaderView(headerText);
+//        TextView headerText = new TextView(getActivity());
+//        headerText.setText("To-Do Lists");
+//        headerText.setTextSize(24);
+//        mListView.addHeaderView(headerText);
 
         //  Create a gesture detector to handle single taps (launch the checklist activity)
         //  and long presses (context menu to delete a checklist)

@@ -13,8 +13,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ToDoListFragment lf = (ToDoListFragment) getSupportFragmentManager().
-                findFragmentById(R.id.fragment_list);
         getSupportActionBar().setIcon(R.drawable.ic_logo);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayUseLogoEnabled(true);

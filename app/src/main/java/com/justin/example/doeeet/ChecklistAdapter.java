@@ -24,6 +24,7 @@ public class ChecklistAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         TextView tv = (TextView) view.findViewById(R.id.checked_text_view);
         CheckBox cb = (CheckBox) view.findViewById(R.id.item_checkbox);
+
         int isComplete = cursor.getInt(ChecklistFragment.COL_TODO_COMPLETE);
         if (isComplete == 0) {
             cb.setChecked(false);
@@ -36,7 +37,6 @@ public class ChecklistAdapter extends CursorAdapter {
     }
 
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_checklist, parent, false);
-        return view;
+        return LayoutInflater.from(context).inflate(R.layout.list_item_task, parent, false);
     }
 }
